@@ -55,9 +55,9 @@ columns_to_normalize = [
     'previous_cancellations',
     'previous_bookings_not_canceled',
     'booking_changes',
+    'required_car_parking_spaces',
     'days_in_waiting_list',
     'adr',
-    'required_car_parking_spaces',
     'total_of_special_requests'
 ]
 
@@ -65,18 +65,8 @@ columns_to_normalize = [
 scaler = StandardScaler()
 data[columns_to_normalize] = scaler.fit_transform(data[columns_to_normalize])
 
-# Definir variáveis dependentes (X) e a variável alvo (y)
-X = data.drop(columns=['is_canceled'])
-y = data['is_canceled']
-
-# Separar os dados em conjuntos de treinamento e teste
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
 data = data.dropna(axis=0, how='all')
 data = data.drop_duplicates()
-
-print('Tamanho do conjunto de treinamento:', X_train.shape)
-print('Tamanho do conjunto de teste:', X_test.shape)
 
 data = data.drop(columns=['reservation_status_date'])
 data.to_csv('cleaned_data.csv', index=False)
