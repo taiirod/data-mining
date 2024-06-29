@@ -67,7 +67,5 @@ data[columns_to_normalize] = scaler.fit_transform(data[columns_to_normalize])
 data = data.dropna(axis=0, how='all')
 data = data.drop_duplicates()
 
-data.to_csv('cleaned_data.csv')
-
 data.info()
 
