@@ -37,6 +37,7 @@ le_columns = ['hotel',
               'reserved_room_type',
               'assigned_room_type',
               'deposit_type',
+              'reservation_status',
               'customer_type'
               ]
 
@@ -45,19 +46,19 @@ for col in le_columns:
     data[col] = le.fit_transform(data[col])
 
 columns_to_normalize = [
-    "lead_time",
-    "stays_in_weekend_nights",
-    "stays_in_week_nights",
-    "adults",
-    "children",
-    "babies",
-    "previous_cancellations",
-    "previous_bookings_not_canceled",
-    "booking_changes",
-    "days_in_waiting_list",
-    "adr",
-    "required_car_parking_spaces",
-    "total_of_special_requests"
+    'lead_time',
+    'stays_in_weekend_nights',
+    'stays_in_week_nights',
+    'adults',
+    'children',
+    'babies',
+    'previous_cancellations',
+    'previous_bookings_not_canceled',
+    'booking_changes',
+    'days_in_waiting_list',
+    'adr',
+    'required_car_parking_spaces',
+    'total_of_special_requests'
 ]
 
 # Criar e aplicar o StandardScaler
@@ -74,5 +75,8 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 data = data.dropna(axis=0, how='all')
 data = data.drop_duplicates()
 
-print("Tamanho do conjunto de treinamento:", X_train.shape)
-print("Tamanho do conjunto de teste:", X_test.shape)
+print('Tamanho do conjunto de treinamento:', X_train.shape)
+print('Tamanho do conjunto de teste:', X_test.shape)
+
+data = data.drop(columns=['reservation_status_date'])
+data.to_csv('cleaned_data.csv', index=False)
