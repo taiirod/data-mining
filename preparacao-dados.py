@@ -13,6 +13,7 @@ for col in missing_data_columns:
 
 # 2. Tratar outliers com Winsorização
 data['lead_time'] = winsorize(data['lead_time'], limits=[0.05, 0.05])
+data['required_car_parking_spaces'] = winsorize(data['required_car_parking_spaces'], limits=[0.05, 0.05])
 
 # 3. One-Hot Encoding para variáveis categóricas de alta cardinalidade
 ohe = OneHotEncoder(drop='first', sparse_output=False)
@@ -70,3 +71,5 @@ data = data.drop_duplicates()
 
 data = data.drop(columns=['reservation_status_date'])
 data.to_csv('cleaned_data.csv', index=False)
+
+print('Arquivo salvo.')
