@@ -8,13 +8,6 @@ import seaborn as sns
 # Carregar o arquivo CSV
 data = pd.read_csv('cleaned_data.csv')
 
-# Explorar e pré-processar os dados
-print(data.head())
-print(data.info())
-
-# Verifique se há valores nulos
-print(data.isnull().sum())
-
 # Tratar valores nulos (se necessário)
 data = data.dropna()
 
@@ -24,7 +17,7 @@ X = data.drop(columns=['is_canceled'])  # Substitua pelas suas colunas
 y = data['is_canceled']  # Substitua pela sua coluna alvo
 
 # Dividir os dados em conjuntos de treinamento e teste
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=50)
 
 # Treinar o modelo de regressão logística
 model = LogisticRegression()

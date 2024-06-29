@@ -13,10 +13,8 @@ dataset.info()
 dataset.head()
 dataset.describe()
 
-X = dataset.iloc[:, 0:3].values
-y = dataset.iloc[:, 4].values
-print(X)
-print(y)
+X = dataset.iloc[:, 0:-1].values
+y = dataset.iloc[:, 1].values
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=50)
 print("X_train shape:", X_train.shape)
