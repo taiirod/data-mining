@@ -17,7 +17,7 @@ X = data.drop(columns=['is_canceled'])  # Substitua pelas suas colunas
 y = data['is_canceled']  # Substitua pela sua coluna alvo
 
 # Dividir os dados em conjuntos de treinamento e teste
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=50)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=100)
 
 # Treinar o modelo de regressão logística
 model = LogisticRegression()

@@ -17,18 +17,19 @@ for col in missing_data_columns:
 
 # Label Encoding para variáveis categóricas de baixa cardinalidade e ordem natural
 le = LabelEncoder()
-le_columns = ['hotel',
-              'meal',
-              'country',
-              'reserved_room_type',
-              'assigned_room_type',
-              'deposit_type',
-              'reservation_status',
-              'customer_type',
-              'distribution_channel',
-              'arrival_date_month',
-              'market_segment'
-              ]
+le_columns = [
+    'hotel',
+    'meal',
+    'country',
+    'reserved_room_type',
+    'assigned_room_type',
+    'deposit_type',
+    'reservation_status',
+    'customer_type',
+    'distribution_channel',
+    'arrival_date_month',
+    'market_segment'
+]
 
 # Aplicar Label Encoding a cada coluna
 for col in le_columns:
@@ -44,7 +45,6 @@ for col in winso_columns:
 
 columns_to_normalize = [
     'hotel',
-    'is_canceled',
     'lead_time',
     'arrival_date_year',
     'arrival_date_month',

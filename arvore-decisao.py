@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
@@ -7,16 +6,12 @@ from sklearn import tree
 from sklearn.tree import DecisionTreeClassifier
 
 # Read dataset to pandas dataframe
-dataset = pd.read_csv('cleaned_data.csv')
+data = pd.read_csv('cleaned_data.csv')
 
-dataset.info()
-dataset.head()
-dataset.describe()
+X = data.drop(columns=['is_canceled']).values
+y = data['is_canceled'].values
 
-X = dataset.iloc[:, 0:-1].values
-y = dataset.iloc[:, 1].values
-
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=50)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=100)
 print("X_train shape:", X_train.shape)
 print("y_train shape:", y_train.shape)
 print("X_test shape:", X_test.shape)
