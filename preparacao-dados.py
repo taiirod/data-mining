@@ -15,31 +15,19 @@ for col in missing_data_columns:
 data['lead_time'] = winsorize(data['lead_time'], limits=[0.05, 0.05])
 data['required_car_parking_spaces'] = winsorize(data['required_car_parking_spaces'], limits=[0.05, 0.05])
 
-# 3. One-Hot Encoding para variáveis categóricas de alta cardinalidade
-ohe = OneHotEncoder(drop='first', sparse_output=False)
-# 3. One-Hot Encoding para variáveis categóricas de alta cardinalidade
-ohe_columns = ['arrival_date_month',
-               'country',
-               'market_segment',
-               'distribution_channel']
-
-ohe_data = ohe.fit_transform(data[ohe_columns])
-
-# Converter a matriz transformada em um DataFrame
-ohe_df = pd.DataFrame(ohe_data, columns=ohe.get_feature_names_out(ohe_columns))
-
-# Concatenar o DataFrame original com o DataFrame one-hot encoded e remover as colunas originais
-data = pd.concat([data.drop(columns=ohe_columns), ohe_df], axis=1)
-
-# 4. Label Encoding para variáveis categóricas de baixa cardinalidade e ordem natural
+# Label Encoding para variáveis categóricas de baixa cardinalidade e ordem natural
 le = LabelEncoder()
 le_columns = ['hotel',
               'meal',
+              'country',
               'reserved_room_type',
               'assigned_room_type',
               'deposit_type',
               'reservation_status',
-              'customer_type'
+              'customer_type',
+              'distribution_channel',
+              'arrival_date_month',
+              'market_segment'
               ]
 
 # Aplicar Label Encoding a cada coluna
