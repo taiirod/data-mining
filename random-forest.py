@@ -17,7 +17,7 @@ print("X_test shape:", X_test.shape)
 print("y_test shape:", y_test.shape)
 
 # Criar um objeto classificador Random Forest
-clf = RandomForestClassifier(n_estimators=100, random_state=42)
+clf = RandomForestClassifier(n_estimators=100, random_state=100)
 
 # Treinar o classificador usando os dados de treinamento
 clf.fit(X_train, y_train)

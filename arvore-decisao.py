@@ -1,6 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn import tree
 from sklearn.tree import DecisionTreeClassifier
@@ -25,9 +25,17 @@ clf = clf.fit(X_train, y_train)
 # Prever os rótulos dos dados de teste
 y_pred = clf.predict(X_test)
 
-# Calcular e imprimir a precisão
+# Calcular e imprimir a pontuação de precisão
 accuracy = accuracy_score(y_test, y_pred)
-print("Acurácia:", accuracy)
+print("Accuracy:", accuracy)
+
+# Imprimir o relatório de classificação
+print("Relatório de Classificação:")
+print(classification_report(y_test, y_pred))
+
+# Calcular e imprimir a matriz de confusão
+print("Matriz de Confusão:")
+print(confusion_matrix(y_test, y_pred))
 
 # Configurar o tamanho da figura
 plt.figure(figsize=(20, 10))

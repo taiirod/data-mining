@@ -1,6 +1,8 @@
 import pandas as pd
 from scipy.stats.mstats import winsorize
+import matplotlib.pyplot as plt
 from sklearn.preprocessing import OneHotEncoder, LabelEncoder, StandardScaler
+import calendar
 
 # Carregar os dados
 data = pd.read_csv('hotel_bookings.csv')
@@ -44,6 +46,50 @@ le_columns = [
 
 for col in le_columns:
     data[col] = le.fit_transform(data[col])
+
+# Histograma do tempo de antecedência da reserva
+data['lead_time'].hist(bins=100)
+plt.xlabel('Lead Time (in days)')
+plt.ylabel('Frequency')
+plt.title('Distribution of Lead Time')
+plt.show()
+
+# Histograma dos dias totais gastos no hotel
+data['total_nights'] = data['stays_in_weekend_nights'] + data['stays_in_week_nights']
+data['total_nights'].hist(bins=100)
+plt.xlabel('Total Nights Spent')
+plt.ylabel('Frequency')
+plt.title('Distribution of Total Nights Spent in Hotel')
+plt.show()
+
+# Histograma do total de pessoas (adultos + crianças)
+data['total_people'] = data['adults'] + data['children']
+data['total_people'].hist(bins=100)
+plt.xlabel('Total People')
+plt.ylabel('Frequency')
+plt.title('Distribution of Total People in Reservations')
+plt.show()
+
+# Criando o histograma para mês de chegada
+month_names = [calendar.month_name[i] for i in range(1, 13)]
+plt.figure(figsize=(10, 6))
+plt.hist(data['arrival_date_month'], bins=100, edgecolor='black')
+plt.title('Histogram of Arrival Months')
+plt.xlabel('Month')
+plt.ylabel('Frequency')
+plt.xticks(range(0, 12), month_names, rotation=45)
+plt.grid(True)
+plt.show()
+
+# Gráfico de dispersão tempo de antecedência da reserva vs preço médio por quarto
+data = data[data['adr'] > 0]
+data['adr'] = winsorize(data['adr'], limits=[0.05, 0.05])
+plt.scatter(data['lead_time'], data['adr'])
+plt.xlabel('Lead Time')
+plt.ylabel('Average Price per Room')
+plt.title('Lead Time vs. Average Price per Room')
+plt.show()
+plt.show()
 
 # Buscar por colunas que possuem outliers
 outliers_count = {}
