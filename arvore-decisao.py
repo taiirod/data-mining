@@ -37,5 +37,4 @@ plt.figure(figsize=(20, 10))
 tree.plot_tree(clf, filled=True)
 
 # Save the figure as a high-definition image
-plt.savefig('decision_tree.png', dpi=300, bbox_inches='tight')
 plt.show()
