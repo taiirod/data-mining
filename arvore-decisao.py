@@ -5,36 +5,35 @@ from sklearn.model_selection import train_test_split
 from sklearn import tree
 from sklearn.tree import DecisionTreeClassifier
 
-# Read dataset to pandas dataframe
 data = pd.read_csv('cleaned_data.csv')
 
 X = data.drop(columns=['is_canceled']).values
 y = data['is_canceled'].values
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=100)
-print("X_train shape:", X_train.shape)
-print("y_train shape:", y_train.shape)
-print("X_test shape:", X_test.shape)
-print("y_test shape:", y_test.shape)
+print("Formato de X_train:", X_train.shape)
+print("Formato de y_train:", y_train.shape)
+print("Formato de X_test:", X_test.shape)
+print("Formato de y_test:", y_test.shape)
 
-# Create a decision tree classifier object
+# Criar um objeto classificador de árvore de decisão
 clf = DecisionTreeClassifier()
 
-# Train the classifier using the training data
+# Treinar o classificador usando os dados de treinamento
 clf = clf.fit(X_train, y_train)
 
-# Predict the labels of the test data
+# Prever os rótulos dos dados de teste
 y_pred = clf.predict(X_test)
 
-# Calculate and print the accuracy score
+# Calcular e imprimir a precisão
 accuracy = accuracy_score(y_test, y_pred)
-print("Accuracy:", accuracy)
+print("Acurácia:", accuracy)
 
-# Configure the figure size
+# Configurar o tamanho da figura
 plt.figure(figsize=(20, 10))
 
-# Plot the decision tree
+# Plotar a árvore de decisão
 tree.plot_tree(clf, filled=True)
 
-# Save the figure as a high-definition image
+# Mostrar o gráfico
 plt.show()

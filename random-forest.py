@@ -1,15 +1,13 @@
 import pandas as pd
-import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 
-# Read dataset to pandas dataframe
 data = pd.read_csv('cleaned_data.csv')
 
 # Selecionar variáveis independentes (features) e a variável alvo
 X = data.drop(columns=['is_canceled']).values
-y = data['is_canceled'].values  # Assumindo que 'is_canceled' é a variável alvo categórica
+y = data['is_canceled'].values
 
 # Dividir os dados em conjuntos de treinamento e teste
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=100)
