@@ -12,7 +12,6 @@ data = pd.read_csv('cleaned_data.csv')
 data = data.dropna()
 
 # Selecionar variáveis independentes e dependentes
-
 X = data.drop(columns=['is_canceled'])  # Substitua pelas suas colunas
 y = data['is_canceled']  # Substitua pela sua coluna alvo
 

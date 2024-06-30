@@ -69,7 +69,6 @@ for col in winso_columns:
 # Normalizar colunas
 columns_to_normalize = [
     'hotel',
-    'is_canceled',
     'lead_time',
     'arrival_date_month',
     'arrival_date_day_of_month',
