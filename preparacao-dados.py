@@ -1,7 +1,5 @@
 import pandas as pd
 from scipy.stats.mstats import winsorize
-import seaborn as sns
-import matplotlib.pyplot as plt
 from sklearn.preprocessing import OneHotEncoder, LabelEncoder, StandardScaler
 
 # Carregar os dados
@@ -14,8 +12,11 @@ columns_to_drop = [
     'meal',
     'country',
     'is_repeated_guest',
+    'babies',
     'previous_bookings_not_canceled',
     'customer_type',
+    'company',
+    'days_in_waiting_list',
     'reservation_status',
     'reservation_status_date'
 ]
@@ -25,13 +26,11 @@ data.drop(columns_to_drop, axis=1, inplace=True)
 # Tratar valores faltantes
 missing_data_columns = [
     'agent',
-    'company'
 ]
 for col in missing_data_columns:
-    if data[col].dtype in ['float64', 'int64']:
-        data[col] = data[col].fillna(data[col].median())
+    data[col] = data[col].fillna(data[col].mean())
 
-# Label Encoding para variáveis categóricas de baixa cardinalidade e ordem natural
+# Label Encoding para variáveis categóricas
 le = LabelEncoder()
 le_columns = [
     'hotel',
@@ -47,7 +46,6 @@ for col in le_columns:
     data[col] = le.fit_transform(data[col])
 
 # Buscar por colunas que possuem outliers
-
 outliers_count = {}
 winso_columns = []
 for column in data.columns:
@@ -71,6 +69,7 @@ for col in winso_columns:
 # Normalizar colunas
 columns_to_normalize = [
     'hotel',
+    'is_canceled',
     'lead_time',
     'arrival_date_month',
     'arrival_date_day_of_month',
@@ -78,7 +77,6 @@ columns_to_normalize = [
     'stays_in_week_nights',
     'adults',
     'children',
-    'babies',
     'market_segment',
     'distribution_channel',
     'previous_cancellations',
@@ -87,11 +85,9 @@ columns_to_normalize = [
     'booking_changes',
     'deposit_type',
     'agent',
-    'company',
-    'days_in_waiting_list',
     'adr',
     'required_car_parking_spaces',
-    'total_of_special_requests'
+    'total_of_special_requests',
 ]
 
 scaler = StandardScaler()
