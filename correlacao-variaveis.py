@@ -22,4 +22,5 @@ plt.tight_layout()
 
 # Mostrar o plot
 plt.show()
+plt.savefig('correlacao.png')
 

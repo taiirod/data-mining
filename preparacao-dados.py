@@ -5,7 +5,22 @@ from sklearn.preprocessing import OneHotEncoder, LabelEncoder, StandardScaler
 # Carregar os dados
 data = pd.read_csv('hotel_bookings.csv')
 
-# 1. Tratar valores faltantes
+# Drop de colunas não necessarias para o dominio da aplicação
+drop_columns = [
+    'arrival_date_year',
+    'arrival_date_week_number',
+    'meal',
+    'country',
+    'is_repeated_guest',
+    'previous_bookings_not_canceled',
+    'customer_type',
+    'reservation_status',
+    'reservation_status_date'
+]
+
+data = data.drop(data.columns[[drop_columns]], axis=1)
+
+# Tratar valores faltantes
 missing_data_columns = [
     'agent',
     'company'
@@ -18,16 +33,12 @@ for col in missing_data_columns:
 le = LabelEncoder()
 le_columns = [
     'hotel',
-    'meal',
-    'country',
+    'arrival_date_month',
+    'market_segment'
+    'distribution_channel',
     'reserved_room_type',
     'assigned_room_type',
     'deposit_type',
-    'reservation_status',
-    'customer_type',
-    'distribution_channel',
-    'arrival_date_month',
-    'market_segment'
 ]
 
 # Aplicar Label Encoding a cada coluna
@@ -45,22 +56,16 @@ for col in winso_columns:
 columns_to_normalize = [
     'hotel',
     'lead_time',
-    'arrival_date_year',
     'arrival_date_month',
-    'arrival_date_week_number',
     'arrival_date_day_of_month',
     'stays_in_weekend_nights',
     'stays_in_week_nights',
     'adults',
     'children',
     'babies',
-    'meal',
-    'country',
     'market_segment',
     'distribution_channel',
-    'is_repeated_guest',
     'previous_cancellations',
-    'previous_bookings_not_canceled',
     'reserved_room_type',
     'assigned_room_type',
     'booking_changes',
@@ -68,11 +73,9 @@ columns_to_normalize = [
     'agent',
     'company',
     'days_in_waiting_list',
-    'customer_type',
     'adr',
     'required_car_parking_spaces',
-    'total_of_special_requests',
-    'reservation_status'
+    'total_of_special_requests'
 ]
 
 # Criar e aplicar o StandardScaler
@@ -82,7 +85,6 @@ data[columns_to_normalize] = scaler.fit_transform(data[columns_to_normalize])
 data = data.dropna(axis=0, how='all')
 data = data.drop_duplicates()
 
-data = data.drop(columns=['reservation_status_date'])
 data.to_csv('cleaned_data.csv', index=False)
 
 print('Arquivo salvo.')
