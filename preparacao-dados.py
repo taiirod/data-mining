@@ -1,7 +1,7 @@
 import pandas as pd
 from scipy.stats.mstats import winsorize
 import matplotlib.pyplot as plt
-from sklearn.preprocessing import OneHotEncoder, LabelEncoder, StandardScaler
+from sklearn.preprocessing import LabelEncoder, StandardScaler
 import calendar
 
 # Carregar os dados
@@ -54,7 +54,7 @@ plt.ylabel('Frequency')
 plt.title('Distribution of Lead Time')
 plt.show()
 
-# Histograma dos dias totais gastos no hotel
+# Histograma dos dias totais passados no hotel
 data['total_nights'] = data['stays_in_weekend_nights'] + data['stays_in_week_nights']
 data['total_nights'].hist(bins=100)
 plt.xlabel('Total Nights Spent')
@@ -82,13 +82,31 @@ plt.grid(True)
 plt.show()
 
 # Gráfico de dispersão tempo de antecedência da reserva vs preço médio por quarto
-data = data[data['adr'] > 0]
-data['adr'] = winsorize(data['adr'], limits=[0.05, 0.05])
-plt.scatter(data['lead_time'], data['adr'])
+canceled_data = data[data['is_canceled'] > 0]
+canceled_data['lead_time'].hist(bins=100)
+plt.xlabel('Lead Time (in days)')
+plt.ylabel('Frequency')
+plt.title('Distribution of Lead Time only between Canceled Rooms')
+plt.show()
+
+# Criando o histograma para mês de chegada apenas de cancelados
+month_names = [calendar.month_name[i] for i in range(1, 13)]
+plt.figure(figsize=(10, 6))
+plt.hist(canceled_data['arrival_date_month'], bins=100, edgecolor='black')
+plt.title('Histogram of Arrival Months only between Canceled Rooms')
+plt.xlabel('Month')
+plt.ylabel('Frequency')
+plt.xticks(range(0, 12), month_names, rotation=45)
+plt.grid(True)
+plt.show()
+
+# Gráfico de dispersão tempo de antecedência da reserva vs preço médio por quarto
+canceled_data = canceled_data[canceled_data['adr'] > 0]
+canceled_data['adr'] = winsorize(canceled_data['adr'], limits=[0.05, 0.05])
+plt.scatter(canceled_data['lead_time'], canceled_data['adr'])
 plt.xlabel('Lead Time')
 plt.ylabel('Average Price per Room')
-plt.title('Lead Time vs. Average Price per Room')
-plt.show()
+plt.title('Lead Time vs. Average Price per Room on Canceled Rooms')
 plt.show()
 
 # Buscar por colunas que possuem outliers
